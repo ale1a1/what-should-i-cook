@@ -103,6 +103,13 @@ function buildSearchParams(filters: FiltersState): URLSearchParams {
     params.set("includeIngredients", filters.ingredients.join(","))
   }
 
+  // complexSearch requires a query param for filters like maxReadyTime to work.
+  // Use a broad food term so it doesn't bias results toward a specific dish.
+  if (!params.has("query")) {
+    params.set("query", "food")
+    params.set("sort", "popularity")
+  }
+
   return params
 }
 
